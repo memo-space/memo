@@ -1,0 +1,129 @@
+:root {
+  --sc: #369068;
+  --er: #faa8a8;
+}
+
+* {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box
+}
+
+img {
+  max-width: 100%
+}
+
+.form {
+  text-align: left;
+  margin-bottom: 2em;
+  line-height: 2.5em
+}
+
+input,
+textarea {
+  width: 100%;
+  line-height: 2em;
+  box-sizing: border-box;
+  padding: 10px 8px;
+  font-size: 16px;
+  border-radius: 5px;
+  outline: none;
+  resize: vertical;
+}
+
+h3 {
+  text-align: center;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  margin: 20px auto 5em;
+  padding: 15px;
+  box-sizing: border-box
+}
+
+html {
+  background-color: Canvas;
+  color: CanvasText;
+  color-scheme: dark light;
+  line-height: 2em;
+  font-size: 16px
+}
+
+a {
+  color: var(--sc);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--er)
+}
+
+.btn {
+  margin: 0 auto;
+  padding: 5px 0;
+  max-width: 120px;
+  text-align: center;
+  color: var(--sc);
+  border: 1px solid var(--sc);
+  border-radius: 8px;
+  background-color: Canvas;
+  transition: background-color, color .5s
+}
+
+.btn:hover {
+  background-color: var(--sc);
+  color: #fff
+}
+
+#menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+  list-style: none;
+  overflow: auto;
+  padding: 5px 15px;
+  background: Canvas
+}
+
+#menu a {
+  padding: 5px 8px;
+}
+
+#msg {
+  width: 200px;
+  font-size: 13px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+#msg>div {
+  opacity: 1;
+  transition: opacity .5s;
+}
+
+.msg {
+  width: auto;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid var(--sc);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 2px 8px;
+  line-height: 1.8em;
+  background: Canvas;
+  transition: all .5s;
+  overflow-wrap: break-word
+}
+
+.msg.err {
+  border: 1px solid var(--er)
+}

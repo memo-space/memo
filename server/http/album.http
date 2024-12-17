@@ -1,0 +1,8 @@
+@base = http://127.0.0.1:4000
+@content = Content-Type: application/json
+@token = Authorization: rainto=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NTI2YTgyOGNiOTdhYzNjNWRhZDAzYiIsImlhdCI6MTczMzQ1NzM2NSwiZXhwIjoxNzM0MDYyMTY1fQ.0vUDuR8RQ4983VubEmBK_WyHaGbaINGhSvZpiTTDq0k
+
+
+### 删除说说
+Get {{base}}/img/牵手可是会 http/1.1
+{{content}}

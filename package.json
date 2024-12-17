@@ -1,0 +1,33 @@
+{
+  "name": "memo",
+  "version": "1.0.0",
+  "description": "🌷 A simple RESTful API create by @mongo and @fastify.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch ./index.js",
+    "client": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.1",
+    "@fastify/static": "^8.0.3",
+    "bcrypt": "^5.1.1",
+    "fastify": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "marked": "^15.0.4",
+    "mongoose": "^8.8.3",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "@vercel/node": "^5.0.0",
+    "@vitest/ui": "^2.1.8",
+    "stylus": "^0.64.0",
+    "supertest": "^7.0.0",
+    "svelte": "^5.14",
+    "vite": "^6.0.1",
+    "vitest": "^2.1.8"
+  }
+}

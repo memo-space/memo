@@ -1,0 +1,16 @@
+@base = http://127.0.0.1:4000
+@content = Content-Type: application/json
+
+POST {{base}}/comment http/1.1
+{{content}}
+
+{
+  "path":"/comment.html",
+  "name":"rainto",
+  "email":"rainto0322@foxmail.com",
+  "body":"这是一条测试",
+  "re":{
+    "pid":"675be952166eadc2cc3c775a",
+    "rid":""
+  }
+}

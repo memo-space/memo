@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+  <link rel="shortcut icon" href="/assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/assets/comment.css">
+  <title>Comment | Memo Api</title>
+  <style>
+    .form {
+      margin: 20px;
+      padding: 1em;
+      border: 1px solid #ccc;
+      border-radius: 1em;
+    }
+
+    .form * {
+      box-sizing: border-box;
+    }
+
+    .form button,
+    .form input {
+      width: 100%;
+      margin: .5em auto;
+      padding: .5em;
+    }
+
+    #comment {
+      margin: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="form">
+      <h3 style="text-align: center;">Comment</h3>
+      <input id="pathname" type="text"><br>
+      <button id="btn">初始化</button>
+    </div>
+
+    <div id="comment"></div>
+  </div>
+
+  <script type="module" src="http://localhost:4001/client/main.js"></script>
+  <script>
+    window.onload = () => {
+      window.MemoTalk.Init({ url: 'http://localhost:4000', el: 'comment' })
+    }
+  </script>
+</body>
+
+</html>

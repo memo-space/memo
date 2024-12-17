@@ -1,0 +1,29 @@
+@base = http://127.0.0.1:4000
+@content = Content-Type: application/json
+@token = Authorization: rainto=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NTI2YTgyOGNiOTdhYzNjNWRhZDAzYiIsImlhdCI6MTczMzQ1NzM2NSwiZXhwIjoxNzM0MDYyMTY1fQ.0vUDuR8RQ4983VubEmBK_WyHaGbaINGhSvZpiTTDq0k
+
+### 注册
+POST {{base}}/signup http/1.1
+{{content}}
+
+{
+  "name":"rainto",
+  "password":"wasd33259181",
+  "email":"rainto0322@foxmail.com"
+}
+
+### 登陆
+POST {{base}}/login http/1.1
+{{content}}
+
+{
+  "name":"rainto",
+  "password":"wasd33259181"
+}
+
+### 登陆
+POST {{base}}/login http/1.1
+{{content}}
+{{token}}
+
+{}

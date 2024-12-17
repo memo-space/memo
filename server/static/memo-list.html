@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+  <link rel="shortcut icon" href="/assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/assets/style.css">
+  <title>Memo List | Memo Api</title>
+  <style>
+    button {
+      text-align: right;
+      margin: 5px;
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    time {
+      color: #666;
+    }
+
+    #memo {
+      text-align: left;
+    }
+
+    #memo .m-item {
+      margin-top: 3em;
+      opacity: 0;
+      animation: fade .8s forwards alternate;
+    }
+
+    #memo .m-item .i-meta {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #memo .m-item img {
+      max-width: 100%;
+    }
+
+    #memo .m-item p:last-child {
+      margin-bottom: 0.5em;
+    }
+
+    #memo #memo-more {
+      cursor: grab;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h3>Memo List</h3>
+    <div id="memo"></div>
+  </div>
+  <div id="menu">
+    <a href="/login.html">Login</a>
+    <a href="/memo.html">Memo</a>
+    <a href="/memo-list.html">List</a>
+    <a href="/upload.html">Upload</a>
+  </div>
+
+  <script src="/assets/main.js"></script>
+  <script src="/memo.js"></script>
+  <script>
+    const memo = new Memo({ el: "#memo", url: window.location.origin })
+  </script>
+</body>
+
+</html>

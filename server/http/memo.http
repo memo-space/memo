@@ -1,0 +1,24 @@
+@base = http://127.0.0.1:4000
+@content = Content-Type: application/json
+@token = Authorization: rainto=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NTI2YTgyOGNiOTdhYzNjNWRhZDAzYiIsImlhdCI6MTczMzQ1NzM2NSwiZXhwIjoxNzM0MDYyMTY1fQ.0vUDuR8RQ4983VubEmBK_WyHaGbaINGhSvZpiTTDq0k
+
+### 发送说说
+POST {{base}}/memo http/1.1
+{{content}}
+{{token}}
+
+{
+  "date":1733478027726,
+  "body":"## 这是一条说说"
+}
+
+### 获取说说
+GET {{base}}/memo/0/10 http/1.1
+{{content}}
+
+### 删除说说
+DELETE {{base}}/memo/6752f06cb779573fa8b2c45f http/1.1
+{{content}}
+{{token}}
+
+{}

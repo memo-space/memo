@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Album | Memo Api</title>
+  <link rel="shortcut icon" href="/assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    #album {
+      margin-block: 10px;
+      min-height: 250px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 5px;
+    }
+
+    #album>div {
+      background: red;
+      aspect-ratio: 1/1;
+      background: gray center no-repeat;
+      background-size: cover;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #album div>img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    #album span {
+      box-sizing: border-box;
+      opacity: 0;
+      width: 100%;
+      display: block;
+      font-size: 12px;
+      padding: 15px;
+      line-height: 0;
+      background: rgba(130, 180, 250, 1);
+      position: absolute;
+      bottom: 0;
+      text-align: center;
+      transition: opacity .5s;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    #album button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 10;
+      opacity: .5;
+    }
+
+    #album>div:hover span {
+      opacity: .8;
+      z-index: 10;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h3>Album</h3>
+    <div class="ctrl" style="text-align: right">
+      <button id="prev">prev</button>
+      <span id="now">1</span>
+      <span class="cut">/</span>
+      <span id="max">1</span>
+      <button id="next">next</button>
+    </div>
+
+    <div id="album"></div>
+
+    <div class="form">
+      <label>Name :
+        <input id="name" placeholder="name" type="text">
+      </label>
+      <label>Upload :
+        <input id="file" type="file" onchange="getFile()">
+      </label>
+    </div>
+    <div id="btn" class="btn">😎 Submit</div>
+  </div>
+  <div id="menu">
+    <a href="/login.html">Login</a>
+    <a href="/memo.html">Memo</a>
+    <a href="/memo-list.html">List</a>
+    <a href="/upload.html">Upload</a>
+  </div>
+  <script src="/assets/main.js"></script>
+  <script>
+    let img_data = '', page = 0, maxpage = 1
+    const getFile = () => {
+      const file = event.target.files[0]
+      if (file && file.type.startsWith('image')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const arrayBuffer = e.target.result
+          img_data = arrayBuffer
+        }
+        reader.readAsDataURL($("file").files[0])
+      }
+    }, getDate = () => {
+      let e = new Date,
+        t = e.getFullYear().toString(),
+        a = e.getMonth() + 1
+      a < 10 && (a = "0" + a)
+      let n = e.getDate()
+      return n < 10 && (n = "0" + n), t + a + n
+    }, getList = async (page) => {
+      $('album').innerHTML = ''
+      const { data, count, max } = await feh('GET', `img/li/${page}/9`)
+      maxpage = max
+      $('now').innerText = page + 1
+      $('max').innerText = maxpage
+      for (let i = 0; i < data.length; i++) {
+        const ele = data[i];
+        const div = cr('div'), desc = cr('span'), btn = cr('button'), img = cr('img')
+        div.style.backgroundImage = '/'
+        desc.innerText = ele.name
+        btn.innerText = "❌"
+        img.src = `img/${ele.name}`
+        ap(div, btn)
+        ap(div, img)
+        ap(div, desc)
+        btn.onclick = async (e) => {
+          const sure = confirm(`你确定想删除 "${ele.name}" 吗`)
+          if (sure) {
+            await feh('DELETE', `img/${ele._id}`, { token: token() })
+            getList(page)
+          }
+        }
+        img.onclick = (e) => {
+          try {
+            e.stopPropagation()
+            $('name').value = `![](${decodeURIComponent(e.target.src)})`
+            $('name').select()
+            document.execCommand("copy")
+            window.getSelection().removeAllRanges()
+            msg.sc('Copy image link success.')
+          } catch (err) {
+            msg.sc('Copy image link failed.')
+          }
+        }
+        ap($('album'), div)
+      }
+    }
+
+    $('name').value = getDate()
+    $('btn').onclick = async () => {
+      const data = await feh('POST', 'img', {
+        name: val('name'),
+        base64: img_data,
+        token: token()
+      })
+      getList(page)
+    }
+    $('prev').onclick = () => {
+      if (page > 0) {
+        page--
+        getList(page)
+      } else {
+        msg.er("It's the homepage.")
+      }
+    }
+    $('next').onclick = () => {
+      if (page < maxpage - 1) {
+        page++
+        getList(page)
+      } else {
+        msg.er("It's the lastpage.")
+      }
+    }
+
+    (async () => { getList(0) })()
+  </script>
+</body>
+
+</html>

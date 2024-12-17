@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+  <link rel="shortcut icon" href="/assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/assets/style.css">
+  <title>Memo | Memo Api</title>
+</head>
+
+<body>
+  <div class="wrap">
+    <h3>Memo</h3>
+    <div class="form">
+      <label>date :
+        <input id="date" placeholder="date" type="text" value="">
+      </label>
+      <label>
+        <div id="link">moment:</div>
+        <textarea name="moment" id="cont" rows="10"></textarea>
+      </label>
+    </div>
+    <div id="btn" class="btn">😎 Submit</div>
+  </div>
+  <div id="menu">
+    <a href="/login.html">Login</a>
+    <a href="/memo.html">Memo</a>
+    <a href="/memo-list.html">List</a>
+    <a href="/upload.html">Upload</a>
+  </div>
+
+  <script src="/assets/main.js"></script>
+  <script>
+    (async () => {
+      const url = new URL(window.location.href)
+      const id = url.searchParams.get('id')
+      if (id) {
+        const { data } = await feh('GET', `memo/${id}`)
+        $('date').value = data.date
+        $('cont').value = data.body
+      } else {
+        $('date').value = new Date
+      }
+
+      $('btn').onclick = async () => {
+        if (!val('cont')) msg.er('The content cannot be empty.')
+        const body = {
+          date: val('date'),
+          body: val('cont'),
+          token: token()
+        }
+        if (id) {
+          await feh('PUT',`memo/${id}`, body)
+        } else {
+          await feh('POST','memo', body)
+        }
+      }
+    })()
+
+
+  </script>
+</body>
+
+</html>

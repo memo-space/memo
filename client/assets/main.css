@@ -1,0 +1,141 @@
+:root {
+  --m-bg: #fff;
+  --m-txt: #000;
+  --m-gray: #666;
+  --m-link: #5460dd;
+}
+
+@media(prefers-color-scheme:dark) {
+  :root {
+    --m-bg: #000;
+    --m-txt: #fff;
+  }
+}
+
+#щ * {
+  box-sizing: border-box;
+  user-select: none;
+  line-height: 2em;
+}
+
+#щ time {
+  margin: 0;
+  padding: 0;
+  color: var(--m-gray);
+  font-size: .8rem;
+}
+
+#щ .m-title {
+  position: relative;
+  font-size: 1em;
+  margin-block: 80px 1em;
+}
+
+#щ .m-title::before {
+  content: '';
+  width: 64px;
+  height: 2px;
+  background-color: var(--m-txt);
+  position: absolute;
+  top: -15px;
+}
+
+#щ .m-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#щ .m-reply {
+  color: var(--m-gray);
+  opacity: 1;
+  transition: opacity .2s;
+  cursor: pointer;
+}
+
+#щ .m-card:hover>.m-head .m-reply {
+  opacity: 1;
+}
+
+#щ .m-comment {
+  margin: 5px;
+}
+
+#щ .m-cards>.m-card {
+  margin-block: 2em;
+}
+
+#щ .m-comment>.m-card {
+  margin-block: 0 1em;
+  padding: 1em 0 1em 1.5em;
+}
+
+#щ .m-at {
+  color: var(--m-link);
+  padding-inline: 10px;
+}
+
+#щ .m-at::before {
+  content: "@";
+  padding-right: 2px;
+}
+
+#щ .m-submit {
+  margin-block: 1em;
+}
+
+#щ .m-input {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+#щ .m-input .m-site {
+  grid-column: 1/-1;
+}
+
+#щ .m-input input,
+#щ textarea {
+  background: transparent;
+  padding: 1em;
+  border: none;
+  outline: none;
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--m-txt);
+}
+
+#щ textarea {
+  font-size: 1em;
+  margin-top: 1em;
+}
+
+#щ .m-content {
+  position: relative;
+}
+#щ .m-content .m-state{
+  padding: .5em;
+  font-size: .8em;
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  color: var(--m-gray);
+}
+#щ .m-state .m-word::after{
+  content: '/';
+  position: relative;
+  padding-left: 5px;
+}
+
+#щ .m-state.m-error{
+  color: #ff9797;
+}
+
+#щ .m-tool {
+  text-align: right;
+}
+
+#щ .m-send {
+  margin: 1em 0;
+  padding: 5px 10px;
+}
