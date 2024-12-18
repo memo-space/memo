@@ -3,6 +3,8 @@
   --m-txt: #000;
   --m-gray: #666;
   --m-link: #5460dd;
+  --m-border: #5460dd;
+  --m-error: #fad192;
 }
 
 @media(prefers-color-scheme:dark) {
@@ -102,7 +104,7 @@
   outline: none;
   width: 100%;
   resize: vertical;
-  border: 1px solid var(--m-txt);
+  border: 1px solid var(--m-border);
 }
 
 #щ textarea {
@@ -110,10 +112,16 @@
   margin-top: 1em;
 }
 
+#щ .m-input input.m-error,
+#щ textarea.m-error {
+  color: var(--m-error);
+}
+
 #щ .m-content {
   position: relative;
 }
-#щ .m-content .m-state{
+
+#щ .m-content .m-state {
   padding: .5em;
   font-size: .8em;
   position: absolute;
@@ -121,21 +129,35 @@
   right: 1em;
   color: var(--m-gray);
 }
-#щ .m-state .m-word::after{
+
+#щ .m-state .m-word::after {
   content: '/';
   position: relative;
   padding-left: 5px;
 }
 
-#щ .m-state.m-error{
-  color: #ff9797;
+#щ .m-content.m-error textarea,
+#щ .m-content.m-error .m-state {
+  color: var(--m-error);
 }
 
 #щ .m-tool {
   text-align: right;
 }
 
-#щ .m-send {
+#щ .m-btn {
+  -webkit-tap-highlight-color: transparent;
   margin: 1em 0;
-  padding: 5px 10px;
+  padding: 5px 2em;
+  background: transparent;
+  border: 1px solid var(--m-border);
+  outline: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: -3px 3px var(--m-border);
+  transition: box-shadow .2s;
+}
+
+#щ .m-btn:active {
+  box-shadow: -2px 2px var(--m-border);
 }

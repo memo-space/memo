@@ -14,7 +14,8 @@ export const Get_Comment_List = async (req, res) => {
 
   const data = await Comment.find({
     path: p,
-    re: { $exists: false }
+    pid: '',
+    rid: ''
   }).sort({ _id: -1 })
     .skip((page) * size)
     .limit(size).lean()

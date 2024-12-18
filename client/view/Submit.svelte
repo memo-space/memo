@@ -1,89 +1,171 @@
 <script>
+  import { onMount } from "svelte";
   import request from "../lib/request";
   import { options } from "../lib/stores";
-  let M = $options;
-
+  let storage = {};
+  let { cancel = false, pid = "", rid = "" } = $props();
+  const M = $options;
   const textStr = "text";
   const nickStr = "name";
   const mailStr = "email";
   const siteStr = "site";
   const contentStr = "content";
-  const contentLimit = 10;
+  const contentLimit = 100;
   const mailReg = /^\w+([-.]\w+)*@\w+([-.]\w+)*(\.[a-z]{2,8})+$/;
   const siteReg = /^(https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(\.[a-zA-Z]{2,6})+)/;
-  let textareaDOM;
-  let isSend = false;
-  let isLegal = false;
+  let localSave = $state(true);
+  onMount(() => {
+    if (localStorage.getItem("Memo_Form")) {
+      console.log(123);
+
+      initInto();
+      metaChange();
+    } else {
+      localSave = false;
+    }
+  });
+  $effect(() => {
+    onInput();
+  });
   const inputs = [
     {
       name: nickStr,
-      placeholder: "名称*",
+      placeholder: "nick* ( 2-8 )",
       type: textStr,
     },
     {
       name: mailStr,
-      placeholder: "电子邮箱*",
+      placeholder: "email* ( @ )",
       type: mailStr,
     },
     {
       name: siteStr,
-      placeholder: "网址",
+      placeholder: "site ( https? )",
       type: siteStr,
     },
   ];
 
-  let metas = {
-    name: { value: "", is: false, limit: 2, required: true },
-    email: { value: "", is: false, limit: 20, required: true },
-    site: { value: "", is: true, limit: 20, required: false, reg: siteReg },
-    content: { value: "", is: false, limit: contentLimit, required: true },
-  };
+  let metas = $state({
+    name: { value: "", is: false, limit: 8 },
+    email: { value: "", is: false },
+    site: { value: "", is: true },
+    content: { value: "", is: false },
+  });
 
-  function onInput() {
+  function metaChange() {
+    const { name, email, site, content } = metas;
+    const len = (param) => {
+      return param.value.length;
+    };
+
+    if (len(name) > 1 && len(name) < name.limit) {
+      name.is = true;
+    } else {
+      name.is = false;
+    }
+
+    if (len(email) > 1 && mailReg.test(email.value)) {
+      email.is = true;
+    } else {
+      email.is = false;
+    }
+
+    if (len(site) === 0 || (len(site) > 1 && siteReg.test(site.value))) {
+      site.is = true;
+    } else {
+      site.is = false;
+    }
+
+    if (len(content) > 2 && len(content) <= contentLimit) {
+      content.is = true;
+    } else {
+      content.is = false;
+    }
     for (const key in metas) {
-      const { value, required, reg } = metas[key];
-      const length=value.length
-      if(required && length){
-        
+      console.log(key,metas[key].is);
+    }
+    console.log("------");
+    
+  }
+  function saveInfo() {
+    for (const [k, v] of Object.entries(metas)) {
+      storage[k] = v.value.trim();
+    }
+    localStorage.Memo_Form = JSON.stringify(storage);
+  }
+  function initInto() {
+    try {
+      storage = JSON.parse(localStorage.getItem("Memo_Form")) || {};
+      for (const [k, v] of Object.entries(storage)) {
+        metas[k].value = v || "";
       }
+    } catch (error) {
+      storage = {};
     }
   }
+  function onInput() {
+    saveInfo();
+    metaChange();
+  }
+  async function onSend() {
+    console.log(pid);
 
-  async function onSend() {}
+    const data = {
+      // @ts-ignore
+      url: `${M.url}/comment`,
+      method: "POST",
+      data: {
+        // @ts-ignore
+        path: M.path,
+        name: metas.name.value,
+        email: metas.email.value,
+        site: metas.site.value,
+        body: metas.content.value,
+        rid,
+        pid,
+      },
+    };
+
+    const result = await request(data);
+    console.log(result);
+  }
+  function onCancel() {
+    cancel = false;
+  }
 </script>
 
 <div class="m-submit">
   <div class="m-input">
     {#each inputs as ele}
       <input
-        class="m-{ele.name} {metas[ele.name].is ? '' : 'm-error'}"
-        type={ele.name}
-        placeholder={ele.placeholder}
+        type={ele.type}
+        class="m-{ele.name}"
+        class:m-error={!metas[ele.name].is}
+        oninput={onInput}
         bind:value={metas[ele.name].value}
-        on:input={onInput}
+        placeholder={ele.placeholder}
       />
     {/each}
   </div>
-  <div class="m-content">
+  <div class="m-content" class:m-error={!metas[contentStr].is}>
     <textarea
-      class=" {metas[contentStr].is ? '' : 'm-error'}"
+      spellcheck="false"
       name={contentStr}
-      bind:value={metas.content.value}
-      bind:this={textareaDOM}
       rows="5"
-      placeholder="考虑到白嫖的数据库容量有限，暂不支持markdown。"
-      on:input={onInput}
+      bind:value={metas.content.value}
+      oninput={onInput}
+      placeholder="Currently does not support markdown. ♥️ "
     ></textarea>
-    <div
-      class="m-state {metas[contentStr].value.length > contentLimit
-        ? 'm-error'
-        : ''}"
-    >
+
+    <div class="m-state">
       <span class="m-word">{metas.content.value.length}</span>
       <span class="m-limit">{contentLimit}</span>
     </div>
   </div>
+
   <div class="m-tool">
-    <button class="m-send m-btn" on:click={onSend}>发送</button>
+    <input type="checkbox" bind:checked={localSave} />
+    <button class="m-btn" onclick={onCancel}>cancel</button>
+    <button class="m-send m-btn" onclick={onSend}>Submit</button>
   </div>
 </div>

@@ -8,9 +8,10 @@ export const Post_Comment_Schema = {
       name: { type: 'string' },
       email: { type: 'string' },
       body: { type: 'string' },
-      pid: { type: 'string' },
-      rid: { type: 'string' }
+      pid: { type: 'string', default: '' },
+      rid: { type: 'string', default: '' }
     },
+    required: ['path', 'name', 'email', 'body']
   }
 }
 export const GET_Comment_List_Schema = {
