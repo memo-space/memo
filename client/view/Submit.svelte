@@ -2,8 +2,7 @@
   import { onMount } from "svelte";
   import request from "../lib/request";
   import { options } from "../lib/stores";
-  let storage = {};
-  let { cancel = false, pid = "", rid = "" } = $props();
+  import { replying } from "../lib/reping.svelte";
   const M = $options;
   const textStr = "text";
   const nickStr = "name";
@@ -13,20 +12,18 @@
   const contentLimit = 100;
   const mailReg = /^\w+([-.]\w+)*@\w+([-.]\w+)*(\.[a-z]{2,8})+$/;
   const siteReg = /^(https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(\.[a-zA-Z]{2,6})+)/;
+  let storage = {};
   let localSave = $state(true);
+  let { at = "" } = $props();
   onMount(() => {
     if (localStorage.getItem("Memo_Form")) {
-      console.log(123);
-
       initInto();
       metaChange();
     } else {
       localSave = false;
     }
   });
-  $effect(() => {
-    onInput();
-  });
+
   const inputs = [
     {
       name: nickStr,
@@ -81,11 +78,6 @@
     } else {
       content.is = false;
     }
-    for (const key in metas) {
-      console.log(key,metas[key].is);
-    }
-    console.log("------");
-    
   }
   function saveInfo() {
     for (const [k, v] of Object.entries(metas)) {
@@ -108,8 +100,6 @@
     metaChange();
   }
   async function onSend() {
-    console.log(pid);
-
     const data = {
       // @ts-ignore
       url: `${M.url}/comment`,
@@ -121,16 +111,26 @@
         email: metas.email.value,
         site: metas.site.value,
         body: metas.content.value,
-        rid,
-        pid,
+        pid: replying.pid,
+        rid: replying.rid,
       },
     };
 
-    const result = await request(data);
-    console.log(result);
+    // const result = await request(data);
+    console.log(data);
   }
   function onCancel() {
-    cancel = false;
+    replying.pid = "";
+    replying.rid = "";
+    replying.repid = "";
+  }
+  function localToggle(params) {
+    if (localSave) {
+      localSave = true;
+    } else {
+      localSave = false;
+      localStorage.Memo_Form = "";
+    }
   }
 </script>
 
@@ -164,8 +164,11 @@
   </div>
 
   <div class="m-tool">
-    <input type="checkbox" bind:checked={localSave} />
-    <button class="m-btn" onclick={onCancel}>cancel</button>
-    <button class="m-send m-btn" onclick={onSend}>Submit</button>
+    <input type="checkbox" bind:checked={localSave} onchange={localToggle} />
+    <button class="m-btn m-cancel" onclick={onCancel}>cancel</button>
+    <button class="m-send m-btn" onclick={onSend}>
+      Submit {#if at}to <span class="m-at">{at}</span>
+      {/if}
+    </button>
   </div>
 </div>

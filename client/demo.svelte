@@ -1,11 +1,12 @@
 <script>
-  import List from "./view/list.svelte";
-  let repid=$state('456')
+	import './Stepper.svelte';
+
+	let count = $state(0);
 </script>
 
+<my-stepper
+	ondecrement={() => count -= 1}
+	onincrement={() => count += 1}
+></my-stepper>
 
-<List {repid} onreply={(id)=>{
-  repid=id
-  console.log(repid);
-  
-}}/>
+<p>count: {count}</p>

@@ -1,11 +1,18 @@
+<svelte:options />
+
 <script>
+  import Self from "./Comment.svelte";
   import { Format } from "../lib/format-time";
   import Submit from "./Submit.svelte";
-  let pid = $state();
-  let { list } = $props();
-  function onReply(id) {
-    pid = id;
-  }
+  import { replying } from "../lib/reping.svelte";
+  let {
+    list,
+    onReply = (CommentID, ReplyID) => {
+      replying.pid = ReplyID || CommentID;
+      replying.rid = ReplyID ? CommentID : "";
+      replying.repid = CommentID || ReplyID;
+    },
+  } = $props();
 </script>
 
 {#each list as comment}
@@ -15,9 +22,8 @@
         <div class="m-nick">
           {#if comment.site}
             <a href={comment.site}>{comment.name}</a>
-          {:else}
-            {comment.name}
           {/if}
+          {comment.name}
         </div>
         <time class="m-meta" datetime={new Date(comment.date).toString()}>
           {Format(comment.date)}
@@ -26,14 +32,21 @@
       <button
         class="m-reply"
         onclick={() => {
-          return onReply(comment._id);
+          onReply(comment._id, comment.pid);
         }}>回复</button
       >
     </div>
     <div class="m-comment">
-      {comment.body}
-      {#if pid === comment._id}
-        <Submit {pid} />
+      <div class="m-body">
+        {#if comment.at}<span class="m-at">{comment.at}</span>{/if}
+        {comment.body}
+      </div>
+      {#if replying.repid === comment._id}
+        <Submit at={comment.name} />
+      {/if}
+
+      {#if comment.reply && comment.reply.length}
+        <Self list={comment.reply} />
       {/if}
     </div>
   </div>

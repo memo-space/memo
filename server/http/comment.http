@@ -6,11 +6,9 @@ POST {{base}}/comment http/1.1
 
 {
   "path":"/comment.html",
-  "name":"rainto",
+  "name":"🤪",
   "email":"rainto0322@foxmail.com",
   "body":"这是一条测试",
-  "re":{
-    "pid":"675be952166eadc2cc3c775a",
-    "rid":""
-  }
+  "pid":"67629043ea0762df1ecdf4de",
+  "rid":"676290c45d276a925f429738"
 }

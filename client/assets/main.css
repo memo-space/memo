@@ -59,22 +59,22 @@
   opacity: 1;
 }
 
-#щ .m-comment {
-  margin: 5px;
+
+#щ .m-comment .m-card{
+  border-left: 1px dashed var(--m-border);
 }
 
-#щ .m-cards>.m-card {
-  margin-block: 2em;
+#щ .m-comment,
+#щ .m-comment>.m-body{
+  margin-bottom: 1em;
 }
-
 #щ .m-comment>.m-card {
-  margin-block: 0 1em;
-  padding: 1em 0 1em 1.5em;
+  padding:1em ;
 }
 
 #щ .m-at {
   color: var(--m-link);
-  padding-inline: 10px;
+  padding-inline: 5px;
 }
 
 #щ .m-at::before {

@@ -6,7 +6,7 @@
   let M = $options;
   let item = [];
   let list = [];
-
+  let replying = [];
   onMount(() => {
     GetComment();
   });
@@ -21,8 +21,7 @@
     });
     if (!ok) throw new Error(message);
     list = [...data, ...list];
-    console.log(list);
-    
+    console.log("commentlist:",list);
   }
 </script>
 
