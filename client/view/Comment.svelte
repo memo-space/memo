@@ -7,6 +7,7 @@
   import { replying } from "../lib/reping.svelte";
   let {
     list,
+    isMore = false,
     onReply = (CommentID, ReplyID) => {
       replying.pid = ReplyID || CommentID;
       replying.rid = ReplyID ? CommentID : "";
@@ -46,7 +47,18 @@
       {/if}
 
       {#if comment.reply && comment.reply.length}
-        <Self list={comment.reply} />
+        <Self list={isMore ? comment.reply : comment.reply.slice(0, 3)} />
+        
+        {#if !isMore && comment.reply.length > 3}
+          <!-- svelte-ignore a11y_consider_explicit_label -->
+          <button
+            class="m-remand"
+            onclick={() => {
+              isMore = true;
+            }}
+            >Expand the remaining {comment.reply.length - 3} comments
+          </button>
+        {/if}
       {/if}
     </div>
   </div>

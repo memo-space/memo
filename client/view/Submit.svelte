@@ -116,7 +116,7 @@
       },
     };
 
-    // const result = await request(data);
+    const result = await request(data);
     console.log(data);
   }
   function onCancel() {
@@ -164,8 +164,13 @@
   </div>
 
   <div class="m-tool">
-    <input type="checkbox" bind:checked={localSave} onchange={localToggle} />
-    <button class="m-btn m-cancel" onclick={onCancel}>cancel</button>
+    <label>
+      <input type="checkbox" bind:checked={localSave} onchange={localToggle} />save form
+    </label>
+    {#if replying.repid}
+      <button class="m-btn m-cancel" onclick={onCancel}>cancel</button>
+    {/if}
+
     <button class="m-send m-btn" onclick={onSend}>
       Submit {#if at}to <span class="m-at">{at}</span>
       {/if}

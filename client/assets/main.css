@@ -49,6 +49,9 @@
 }
 
 #щ .m-reply {
+  background: transparent;
+  border: none;
+  outline: none;
   color: var(--m-gray);
   opacity: 1;
   transition: opacity .2s;
@@ -59,9 +62,9 @@
   opacity: 1;
 }
 
-
-#щ .m-comment .m-card{
-  border-left: 1px dashed var(--m-border);
+#щ .m-cards{
+  padding: 1em;
+  border: 1px dashed var(--m-border);;
 }
 
 #щ .m-comment,
@@ -69,13 +72,26 @@
   margin-bottom: 1em;
 }
 #щ .m-comment>.m-card {
-  padding:1em ;
+  padding:1em 0 1em 1em;
 }
 
 #щ .m-at {
   color: var(--m-link);
   padding-inline: 5px;
 }
+
+#щ .m-remand{
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--m-gray);
+}
+
+#щ .m-remand::before{
+  content: '————';
+  margin-left: .5em;
+}
+
 
 #щ .m-at::before {
   content: "@";
