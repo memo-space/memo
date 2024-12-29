@@ -42,12 +42,22 @@
   top: -15px;
 }
 
-#щ .m-head {
+#щ .m-head,
+#щ .m-head .m-info{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+#щ .m-nick{
+color: var(--m-link);
+}
+
+#щ .m-nick::after{
+  content: "•";
+  font-size: .8em;
+  padding-inline: .5em;
+}
 #щ .m-reply {
   background: transparent;
   border: none;
@@ -61,24 +71,32 @@
 #щ .m-card:hover>.m-head .m-reply {
   opacity: 1;
 }
-
-#щ .m-cards{
-  padding: 1em;
-  border: 1px dashed var(--m-border);;
+.m-cards>.m-card{
+  padding-inline: 1em;
+  border: 1px dashed var(--m-border);
+  border-radius: 5px;
+}
+#щ .m-body{
+  padding-bottom: 1em;
+}
+#щ .m-cards>.m-card{
+  margin-block: 1em;
 }
 
 #щ .m-comment,
 #щ .m-comment>.m-body{
-  margin-bottom: 1em;
+  font-size: .9rem;
+  padding-left: .5em;
 }
 #щ .m-comment>.m-card {
-  padding:1em 0 1em 1em;
+  padding-left:1em;
 }
-
+#щ .m-more-count,
 #щ .m-at {
   color: var(--m-link);
   padding-inline: 5px;
 }
+
 
 #щ .m-remand{
   border: none;
@@ -90,6 +108,7 @@
 #щ .m-remand::before{
   content: '————';
   margin-left: .5em;
+  padding-right: .5em;
 }
 
 
@@ -172,6 +191,9 @@
   cursor: pointer;
   box-shadow: -3px 3px var(--m-border);
   transition: box-shadow .2s;
+}
+#щ .m-cancel{
+  margin-right: .5em;
 }
 
 #щ .m-btn:active {

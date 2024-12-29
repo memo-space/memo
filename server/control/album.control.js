@@ -1,7 +1,6 @@
 import { Album } from "../model";
 import { conver_image_list } from "../utils/image";
 
-
 export const Get_Image = async (req, res) => {
   const { name } = req.params
   const img = await Album.findOne({ name: decodeURIComponent(name) })

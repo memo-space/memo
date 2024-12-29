@@ -1,30 +1,37 @@
 <script>
   import { onMount } from "svelte";
   import { options } from "../lib/stores";
-  import request from "../lib/request";
   import Comment from "./Comment.svelte";
+  import { Get } from "../lib/GetResponse";
   let M = $options;
-  let item = [];
-  let list = [];
-  let replying = [];
+  let current = 0;
+  let max = 0;
+  let fail = false;
+  let list = $state([]);
+  let isLoad = $state(false);
+  
   onMount(() => {
     GetComment();
   });
-  $: {
-    list = [...item, ...list];
-  }
 
   async function GetComment() {
-    const { ok, data, message } = await request({
+    isLoad = true;
+    const { ok, data, message, max } = await Get(
       // @ts-ignore
-      url: `${M.url}/comment/0/5?p=${M.path}`,
-    });
-    if (!ok) throw new Error(message);
+      `${M.url}/comment/${current}/5?p=${M.path}`,
+    );
+    if (!ok) fail = true;
     list = [...data, ...list];
-    console.log("commentlist:",list);
+
+    console.log("commentlist:", list);
+  }
+  async function more() {
+    current++;
+    GetComment();
   }
 </script>
 
 <div class="m-cards">
   <Comment {list} />
+  <button onclick={more}>more</button>
 </div>

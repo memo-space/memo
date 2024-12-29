@@ -1,6 +1,6 @@
 @base = http://127.0.0.1:4000
 @content = Content-Type: application/json
-@token = Authorization: rainto=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NTI2YTgyOGNiOTdhYzNjNWRhZDAzYiIsImlhdCI6MTczMzQ1NzM2NSwiZXhwIjoxNzM0MDYyMTY1fQ.0vUDuR8RQ4983VubEmBK_WyHaGbaINGhSvZpiTTDq0k
+@token = Authorization: rainto=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NmQ0ZDgzMjQ2ZTZiZjYwYWY0YTE0NiIsImlhdCI6MTczNTM5NDE3MiwiZXhwIjoxNzM1OTk4OTcyfQ.4QhURzXoFh1itmSxQsvyN22CYpwoniISnHW_ONfbaio
 
 ### 发送说说
 POST {{base}}/memo http/1.1
@@ -8,7 +8,7 @@ POST {{base}}/memo http/1.1
 {{token}}
 
 {
-  "date":1733478027726,
+  "date":"1733478027726",
   "body":"## 这是一条说说"
 }
 

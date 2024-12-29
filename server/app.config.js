@@ -16,8 +16,8 @@ const SECRET = process.env.SECRET || "memo"
 const WHITE_LIST = [];
 
 const CORS = {
-  origin: "*",
-  methods: ['GET', 'PUT', 'POST', 'DELETE'],
+  origin: '*',
+  methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }
 

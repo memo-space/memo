@@ -18,7 +18,9 @@
     "jsonwebtoken": "^9.0.2",
     "marked": "^15.0.4",
     "mongoose": "^8.8.3",
-    "sharp": "^0.33.5"
+    "rollup-plugin-serve": "^1.1.1",
+    "sharp": "^0.33.5",
+    "terser": "^5.37.0"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^5.0.0",

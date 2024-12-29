@@ -1,9 +1,4 @@
 import { Comment, Memos } from "../model";
-function DeepClone(options = {}) {
-  const str = JSON.stringify(options)
-  const json = JSON.parse(str)
-  return json
-}
 
 export const Get_Comment_count = async (req, res) => {
 

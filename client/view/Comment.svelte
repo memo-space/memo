@@ -56,7 +56,7 @@
             onclick={() => {
               isMore = true;
             }}
-            >Expand the remaining {comment.reply.length - 3} comments
+            >Expand <span class="m-more-count">{comment.reply.length - 3}</span> comments
           </button>
         {/if}
       {/if}

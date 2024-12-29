@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import request from "../lib/request";
+  import { Post } from "../lib/GetResponse";
   import { options } from "../lib/stores";
   import { replying } from "../lib/reping.svelte";
   const M = $options;
@@ -12,16 +12,13 @@
   const contentLimit = 100;
   const mailReg = /^\w+([-.]\w+)*@\w+([-.]\w+)*(\.[a-z]{2,8})+$/;
   const siteReg = /^(https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(\.[a-zA-Z]{2,6})+)/;
+  let isSend = $state(false);
+  let isLegal = $state(false);
   let storage = {};
-  let localSave = $state(true);
   let { at = "" } = $props();
   onMount(() => {
-    if (localStorage.getItem("Memo_Form")) {
-      initInto();
-      metaChange();
-    } else {
-      localSave = false;
-    }
+    initInto();
+    metaChange();
   });
 
   const inputs = [
@@ -78,6 +75,7 @@
     } else {
       content.is = false;
     }
+    isLegal = name.is && email.is && site.is && content.is;
   }
   function saveInfo() {
     for (const [k, v] of Object.entries(metas)) {
@@ -100,37 +98,39 @@
     metaChange();
   }
   async function onSend() {
-    const data = {
-      // @ts-ignore
-      url: `${M.url}/comment`,
-      method: "POST",
-      data: {
-        // @ts-ignore
-        path: M.path,
+    try {
+      if (!isSend && !isLegal) return;
+      const body = {
+        path: location.pathname,
         name: metas.name.value,
         email: metas.email.value,
         site: metas.site.value,
         body: metas.content.value,
         pid: replying.pid,
         rid: replying.rid,
-      },
-    };
+      };
+      isSend = true
 
-    const result = await request(data);
-    console.log(data);
+      // @ts-ignore
+      const data = await Post(`${M.url}/comment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+      console.log(data);
+      
+    } catch (error) {
+      console.error("sendError:", error.message);
+    } finally {
+      isSend = false;
+    }
   }
   function onCancel() {
     replying.pid = "";
     replying.rid = "";
     replying.repid = "";
-  }
-  function localToggle(params) {
-    if (localSave) {
-      localSave = true;
-    } else {
-      localSave = false;
-      localStorage.Memo_Form = "";
-    }
   }
 </script>
 
@@ -164,15 +164,15 @@
   </div>
 
   <div class="m-tool">
-    <label>
-      <input type="checkbox" bind:checked={localSave} onchange={localToggle} />save form
-    </label>
     {#if replying.repid}
       <button class="m-btn m-cancel" onclick={onCancel}>cancel</button>
     {/if}
 
-    <button class="m-send m-btn" onclick={onSend}>
-      Submit {#if at}to <span class="m-at">{at}</span>
+    <button class="m-send m-btn" onclick={onSend} disabled={isSend || !isLegal}>
+      {#if isSend && isLegal}
+        Loading ...
+      {:else}
+        Submit {#if at}to <span class="m-at">{at}</span>{/if}
       {/if}
     </button>
   </div>

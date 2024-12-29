@@ -1,14 +1,21 @@
-@base = http://127.0.0.1:4000
+@base = http://localhost:4000
 @content = Content-Type: application/json
 
 POST {{base}}/comment http/1.1
 {{content}}
 
 {
-  "path":"/comment.html",
-  "name":"🤪",
+  "path":"/",
+  "name":"123456",
   "email":"rainto0322@foxmail.com",
   "body":"这是一条测试",
-  "pid":"67629043ea0762df1ecdf4de",
-  "rid":"676290c45d276a925f429738"
+  "pid":"",
+  "rid":""
 }
+
+###
+GET {{base}}/comment/0/5?p=/comment.html http/1.1
+
+###
+OPTIONS {{base}}/comment http/1.1
+{{content}}
