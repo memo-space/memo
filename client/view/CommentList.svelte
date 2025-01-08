@@ -9,20 +9,20 @@
   let fail = false;
   let list = $state([]);
   let isLoad = $state(false);
-  
+
   onMount(() => {
     GetComment();
   });
 
   async function GetComment() {
     isLoad = true;
-    console.log(`${M.url}comment/${current}/5?p=${M.path}`)
+    console.log(`${M.url}comment/${current}/5?p=${M.path}`);
     const { ok, data, message, max } = await Get(
       // @ts-ignore
       `${M.url}comment/${current}/5?p=${M.path}`,
     );
     if (!ok) fail = true;
-    list = [...data, ...list];
+    list = [...list, ...data];
 
     console.log("commentlist:", list);
   }
