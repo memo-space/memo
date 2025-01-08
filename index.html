@@ -12,7 +12,9 @@
   <div id="app"></div>
   <script type="module">
     import MemoTalk from "/client/main.js"
-    new MemoTalk({el:'app',url:'http://localhost:4000'})
+    window.onload = () => {
+      MemoTalk.init({el: 'app',url:'http://localhost:4000/'})
+    }
   </script>
 </body>
 

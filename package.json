@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "🌷 A simple RESTful API create by @mongo and @fastify.",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "bun run --watch ./index.js",
     "client": "vite",

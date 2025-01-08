@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
   <link rel="shortcut icon" href="/assets/favicon.png" type="image/png">
   <link rel="stylesheet" href="/memo/memo_talk.css">
+  <script src="/memo/memo_talk.js"></script>
   <title>Comment | Memo Api</title>
   <style>
-
     .form {
       margin: 20px;
       padding: 1em;
@@ -43,13 +43,14 @@
 
     <div id="comment"></div>
   </div>
-  <!--
-  <script type="module" src="https://localhost:4001/assets/main.js"></script>
--->
-  <script type="module">
+
+  <script>
     //import MemoTalk from "http://192.168.10.245:4001/client/main.js"
-    import MemoTalk from "/memo/memo_talk.js"
-    new MemoTalk({ el: 'comment', url: 'http://192.168.10.245:4000' })
+    //import MemoTalk from "/memo/memo_talk.js"
+    //new MemoTalk({ el: 'comment', url: 'http://192.168.10.245:4000' })
+    window.onload = () => {
+      MemoTalk.init({el: 'comment'})
+    }
   </script>
 </body>
 

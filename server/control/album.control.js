@@ -6,6 +6,7 @@ export const Get_Image = async (req, res) => {
   const img = await Album.findOne({ name: decodeURIComponent(name) })
   let BUFFER = ''
   res.header('Content-Type', "image/png;charset=utf-8")
+  res.header('Cache-Control', 'public, no-transform, s-maxage=604800, max-age=604800')
   img ? BUFFER = Buffer.from(img.base64, 'base64') : BUFFER = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4", 'base64')
   return BUFFER
 }
@@ -26,6 +27,7 @@ export const Upload_Image = async (req, res) => {
 }
 
 export const Get_Image_list = async (req, res) => {
+  res.header('Cache-Control', 'public, no-transform, s-maxage=604800, max-age=604800')
   const { page, size } = req.params
   const data = await Album.find()
     .sort({ _id: -1 })

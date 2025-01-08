@@ -16,9 +16,10 @@
 
   async function GetComment() {
     isLoad = true;
+    console.log(`${M.url}comment/${current}/5?p=${M.path}`)
     const { ok, data, message, max } = await Get(
       // @ts-ignore
-      `${M.url}/comment/${current}/5?p=${M.path}`,
+      `${M.url}comment/${current}/5?p=${M.path}`,
     );
     if (!ok) fail = true;
     list = [...data, ...list];

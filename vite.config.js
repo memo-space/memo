@@ -15,7 +15,6 @@ export default defineConfig({
       fileName: 'memo_talk',
     },
     terserOptions: {
-      
       mangle:{
         reserved:['MemoTalk']
       }

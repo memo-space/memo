@@ -1,3 +1,9 @@
+// const fastify = require('fastify')
+// const { OPTION } = require('./app.config')
+// const { RequestHandle, Serialization, ErrorHandle, LoogerHandle, sendHandle } = require('./hooks')
+// const Router = require('./routes')
+// const Plugins = require('./plugins')
+
 import fastify from 'fastify'
 import { OPTION } from "./app.config";
 import { RequestHandle, Serialization, ErrorHandle, LoogerHandle, sendHandle } from "./hooks/index";
