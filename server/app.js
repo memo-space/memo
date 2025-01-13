@@ -1,9 +1,3 @@
-// const fastify = require('fastify')
-// const { OPTION } = require('./app.config')
-// const { RequestHandle, Serialization, ErrorHandle, LoogerHandle, sendHandle } = require('./hooks')
-// const Router = require('./routes')
-// const Plugins = require('./plugins')
-
 import fastify from 'fastify'
 import { OPTION } from "./app.config";
 import { RequestHandle, Serialization, ErrorHandle, LoogerHandle, sendHandle } from "./hooks/index";
@@ -11,7 +5,6 @@ import Router from "./routes/index";
 import Plugins from "./plugins/index";
 
 const app = fastify(OPTION)
-
 // Register plugins
 app.register(Plugins)
 
@@ -19,7 +12,6 @@ app.register(Plugins)
 app.addHook('onRequest', RequestHandle)
 app.addHook('preSerialization', Serialization)
 app.addHook('onResponse', LoogerHandle)
-app.addHook('onSend', sendHandle)
 
 // Set default error return request body { ok.false }
 app.setErrorHandler(ErrorHandle)

@@ -46,7 +46,6 @@ const COLOR = {
   URL: m => `[93m ${m} [0m`
 }
 
-
 export {
   LISTEN, OPTION, SECRET, WHITE_LIST, CORS, SMTP, Static_Config, Image_Config, COLOR
 }
