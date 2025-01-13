@@ -36,7 +36,7 @@ export default function (app) {
     res.sendFile('comment.html')
   })
   app.get('/memo/memo_talk.js', function (req, res) {
-    res.sendFile('/memo/memo_talk.js')
+    res.sendFile('/memo/memo_talk.umd.cjs')
   })
   app.get('/memo/memo_talk.css', function (req, res) {
     res.sendFile('/memo/memo_talk.css')
