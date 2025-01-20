@@ -37,20 +37,27 @@ function MSG(e, t) {
     }, 500)
   }, 2000)
 }
-function logout() {
-  localStorage.removeItem('token')
-  window.location.href = "/login.html"
-}
-+async function () {
+
+window.addEventListener('DOMContentLoaded', function () {
   const tk = token()
-  const auth = ["/", "/login.html", "/init.html"].includes(window.location.pathname)
-  if (tk) {
-    const bt = cr('a')
-    bt.innerText = 'Logout'
-    bt.onclick = logout
-    window.onload=()=>{
-      ap($('menu'),bt)
+  if (!tk) {
+    const rule = ['/', "/login.html", "/init.html"]
+    const auth = rule.includes(window.location.pathname)
+    if (!auth) {
+      localStorage.removeItem('token')
+      window.location.href = "/login.html"
+    }
+    const menu = document.querySelectorAll('a')
+    for (const link of menu) {
+      const { pathname } = new URL(link.href)
+      if (!tk && !rule.includes(pathname)) {
+        link.onclick = function (e) {
+          e.preventDefault()
+          msg.er("Please login first.")
+        }
+
+      }
     }
   }
-  if (!tk && !auth) logout()
-}()
+
+})

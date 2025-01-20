@@ -8,8 +8,6 @@ export const Get_Memo = async (req, res) => {
 }
 
 export const Get_Memo_List = async (req, res) => {
-  res.header('Cache-Control', 'public, no-transform, s-maxage=3600, max-age=3600')
-
   const { page, size } = req.params
   const data = await Memos.find()
     .sort({ date: -1 })

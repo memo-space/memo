@@ -1,6 +1,1 @@
-<style>
-  #memo_logo:hover{
-    filter: drop-shadow(0 0 2em #fff);
-  }
-</style>
-<img id="memo_logo" style="transition: filter 300ms;" src="./public/assets/favicon.png">
+<img id="memo_logo" style="transition: filter 300ms; margin: 0 auto;" src="./server/static/assets/favicon.png">

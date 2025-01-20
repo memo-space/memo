@@ -1,10 +1,9 @@
-import { WHITE_LIST, COLOR } from "../app.config";
+import { BLACK_LIST, COLOR } from "../app.config";
 
 export const RequestHandle = (req, res, done) => {
-  if (WHITE_LIST.length > 0 && !WHITE_LIST.includes(host)) {
-    res.status(403).send({ ok: false, error: 'Forbidden', message: 'Your domain is not allowed to access this resource.' })
+  if (BLACK_LIST.length > 0 && BLACK_LIST.includes(req.host)) {
+    res.code(403).send({ ok: false, code: 403, error: 'Forbidden', message: 'Your domain is on the blacklist.' })
   }
-
   return done()
 }
 
@@ -22,7 +21,7 @@ export const Serialization = (req, res, data, done) => {
 }
 
 export const ErrorHandle = (error, req, res) => {
-  const code = error.statusCode || 500
+  const code = error.statusCode || res.statusCode || 500
   res.statusCode = code
   res.send({
     ok: false,
@@ -41,7 +40,7 @@ export const LoogerHandle = (req, res) => {
   )
 }
 
-export const sendHandle = (req, res,payload,done) => {
+export const sendHandle = (req, res, payload, done) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization')
   res.header('Access-Control-Allow-Methods', '*')

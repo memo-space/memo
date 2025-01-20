@@ -12,6 +12,7 @@ app.register(Plugins)
 app.addHook('onRequest', RequestHandle)
 app.addHook('preSerialization', Serialization)
 app.addHook('onResponse', LoogerHandle)
+app.addHook('onSend', sendHandle)
 
 // Set default error return request body { ok.false }
 app.setErrorHandler(ErrorHandle)

@@ -27,7 +27,6 @@ export const Upload_Image = async (req, res) => {
 }
 
 export const Get_Image_list = async (req, res) => {
-  res.header('Cache-Control', 'public, no-transform, s-maxage=604800, max-age=604800')
   const { page, size } = req.params
   const data = await Album.find()
     .sort({ _id: -1 })

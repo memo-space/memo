@@ -13,12 +13,12 @@ const OPTION = {
 const SECRET = process.env.SECRET || "memo"
 
 // [`127.0.0.1:${LISTEN.port}`, `localhost:${LISTEN.port}`, 'rainto.top', 'www.rainto.top', 'api.rainto.top', 'vercel.com']
-const WHITE_LIST = [];
+const BLACK_LIST = [];
 
 const CORS = {
   origin: '*',
   methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization','Access-Control-Allow-Origin']
 }
 
 const SMTP = {
@@ -47,5 +47,5 @@ const COLOR = {
 }
 
 export {
-  LISTEN, OPTION, SECRET, WHITE_LIST, CORS, SMTP, Static_Config, Image_Config, COLOR
+  LISTEN, OPTION, SECRET, BLACK_LIST, CORS, SMTP, Static_Config, Image_Config, COLOR
 }

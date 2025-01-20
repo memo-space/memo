@@ -31,12 +31,28 @@
 
   <script src="/assets/main.js"></script>
   <script>
-    const tk = localStorage.getItem('token')
+    let tk = localStorage.getItem('token')
+    const user = localStorage.getItem('m-user')
+    if (user) $('name').value = user
     const btn = $('btn')
     if (tk) btn.innerText = "😄 Logout"
+    
     $('btn').onclick = async () => {
-      const { token } = await feh('POST', 'login', { name: val('name'), password: val('psw') })
-      localStorage.setItem('token',token)
+      tk = localStorage.getItem('token')
+      if (tk) {
+        localStorage.removeItem('token')
+        msg.sc('Logout successful.')
+        btn.innerText = "😎 Submit"
+      } else {
+        localStorage.setItem('m-user', val('name'))
+        const { ok, token } = await feh('POST', 'login', { name: val('name'), password: val('psw') })
+        if (ok) {
+          localStorage.setItem('token', token)
+          setTimeout(() => { location.reload() }, 200)
+        } else {
+          localStorage.removeItem('token')
+        }
+      }
     }
   </script>
 </body>

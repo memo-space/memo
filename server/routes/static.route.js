@@ -28,7 +28,7 @@ export default function (app) {
     res.sendFile('/assets/main.js')
   })
   app.get('/memo.js', function (req, res) {
-    res.sendFile('/memo.js')
+    res.sendFile('/assets/memo.js')
   })
 
   // comment
